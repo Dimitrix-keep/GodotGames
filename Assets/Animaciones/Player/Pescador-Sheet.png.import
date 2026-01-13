@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8up4lqv536ip"
-path="res://.godot/imported/road-Sheet.png-ed577d82e6858a84248f602b8b418e6f.ctex"
+uid="uid://wjawsieso1vj"
+path="res://.godot/imported/Pescador-Sheet.png-535c5c55076eb58d9887415baff11c5d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Animaciones/Road/road-Sheet.png"
-dest_files=["res://.godot/imported/road-Sheet.png-ed577d82e6858a84248f602b8b418e6f.ctex"]
+source_file="res://Assets/Animaciones/Player/Pescador-Sheet.png"
+dest_files=["res://.godot/imported/Pescador-Sheet.png-535c5c55076eb58d9887415baff11c5d.ctex"]
 
 [params]
 
