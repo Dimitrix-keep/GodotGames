@@ -1,25 +1,22 @@
-[gd_scene load_steps=19 format=3 uid="uid://cllkug2f0k0lw"]
+[gd_scene load_steps=18 format=3 uid="uid://cllkug2f0k0lw"]
 
 [ext_resource type="Texture2D" uid="uid://wjawsieso1vj" path="res://Assets/Animaciones/Player/Pescador-Sheet.png" id="1_eu8fj"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_u4u6t"]
-load_path = "res://.godot/imported/PescadorAnimation.png-e1c27c01fb95a75f919ab71f29ac61c5.ctex"
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_eu8fj"]
-atlas = SubResource("CompressedTexture2D_u4u6t")
-region = Rect2(0, 0, 32, 32)
+atlas = ExtResource("1_eu8fj")
+region = Rect2(0, 0, 50, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u4u6t"]
-atlas = SubResource("CompressedTexture2D_u4u6t")
-region = Rect2(32, 0, 32, 32)
+atlas = ExtResource("1_eu8fj")
+region = Rect2(50, 0, 50, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rs2dv"]
-atlas = SubResource("CompressedTexture2D_u4u6t")
-region = Rect2(64, 0, 32, 32)
+atlas = ExtResource("1_eu8fj")
+region = Rect2(100, 0, 50, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kxdp4"]
-atlas = SubResource("CompressedTexture2D_u4u6t")
-region = Rect2(96, 0, 32, 32)
+atlas = ExtResource("1_eu8fj")
+region = Rect2(150, 0, 50, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_djt6s"]
 atlas = ExtResource("1_eu8fj")
@@ -128,9 +125,9 @@ radius = 6.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wngqx")
-animation = &"throwing"
+animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.8778034
+frame_progress = 0.6079758
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

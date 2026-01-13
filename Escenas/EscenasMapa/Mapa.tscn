@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=4 uid="uid://cogn8g83f5lke"]
+
+[ext_resource type="Texture2D" uid="uid://7nernxmc8cf7" path="res://Assets/Tilemap/TileMap.png" id="1_14up2"]
+[ext_resource type="PackedScene" uid="uid://cllkug2f0k0lw" path="res://Escenas/Player/player.tscn" id="2_oxx6f"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_14up2"]
+texture = ExtResource("1_14up2")
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_oxx6f"]
+sources/0 = SubResource("TileSetAtlasSource_14up2")
+
+[node name="Node2D" type="Node2D"]
+scale = Vector2(2, 2)
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("2_oxx6f")]
+scale = Vector2(2, 2)
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+scale = Vector2(2, 2)
+
+[node name="Background" type="Node2D" parent="."]
+scale = Vector2(2, 2)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Background"]
+tile_map_data = PackedByteArray("AAABAAAAAAAAAAEAAAACAAAAAAABAAEAAAADAAAAAAABAAEAAAAEAAAAAAABAAEAAAAFAAAAAAABAAEAAAAGAAAAAAACAAEAAAAGAAEAAAACAAIAAAAFAAEAAAABAAIAAAAEAAEAAAABAAIAAAADAAEAAAABAAIAAAACAAEAAAABAAIAAAAFAAIAAAABAAMAAAAEAAIAAAABAAMAAAADAAIAAAABAAMAAAACAAIAAAABAAMAAAABAAIAAAAAAAMAAAABAAEAAAAAAAIAAAAGAAIAAAACAAMAAAA=")
+tile_set = SubResource("TileSet_oxx6f")
