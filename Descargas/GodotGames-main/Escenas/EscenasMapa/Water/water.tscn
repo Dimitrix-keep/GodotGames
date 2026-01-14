@@ -9,5 +9,5 @@ script = ExtResource("1_sf4xi")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_e11ib")
 
-[node name="Camera2D" type="Camera2D" parent="Sprite2D"]
+[node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
