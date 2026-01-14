@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=4 uid="uid://cogn8g83f5lke"]
+[gd_scene load_steps=11 format=4 uid="uid://cogn8g83f5lke"]
 
 [ext_resource type="Texture2D" uid="uid://7nernxmc8cf7" path="res://Assets/Tilemap/TileMap.png" id="1_14up2"]
+[ext_resource type="Shader" uid="uid://cnoyfd8bo5r8g" path="res://Escenas/EscenasMapa/Mapa.gdshader" id="2_dluhy"]
 [ext_resource type="PackedScene" uid="uid://cllkug2f0k0lw" path="res://Escenas/Player/player.tscn" id="2_oxx6f"]
-[ext_resource type="Texture2D" uid="uid://brv41t0jm8obj" path="res://Escenas/waves-Sheet.png" id="3_dluhy"]
-[ext_resource type="Texture2D" uid="uid://cayjwh6bmeksv" path="res://Assets/Tilemap/waves-Sheet.png" id="3_o37ym"]
+[ext_resource type="Texture2D" uid="uid://pi03ym5ptwvu" path="res://Assets/Tilemap/onda.png" id="3_dluhy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o37ym"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_14up2"]
 texture = ExtResource("1_14up2")
@@ -35,40 +37,23 @@ texture = ExtResource("1_14up2")
 2:5/0 = 0
 2:6/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o37ym"]
-texture = ExtResource("3_o37ym")
-0:0/animation_columns = 10
-0:0/animation_frame_0/duration = 1.0
-0:0/animation_frame_1/duration = 1.0
-0:0/animation_frame_2/duration = 1.0
-0:0/animation_frame_3/duration = 1.0
-0:0/animation_frame_4/duration = 1.0
-0:0/0 = 0
-5:0/0 = 0
-6:0/0 = 0
-7:0/0 = 0
-8:0/0 = 0
-9:0/0 = 0
-
 [sub_resource type="TileSet" id="TileSet_oxx6f"]
 sources/0 = SubResource("TileSetAtlasSource_14up2")
-sources/6 = SubResource("TileSetAtlasSource_o37ym")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dluhy"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dluhy"]
+shader = ExtResource("2_dluhy")
+shader_parameter/velocidad_flujo = 2.0
+shader_parameter/amplitud_onda = 0.03
+shader_parameter/frecuencia_onda = 6.28
+shader_parameter/color_tinte = Color(0, 0.4, 0.6, 0.7)
+shader_parameter/brillo_superficie = 0.3
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qliup"]
 texture = ExtResource("3_dluhy")
-0:0/animation_columns = 8
-0:0/animation_speed = 5.0
-0:0/animation_frame_0/duration = 1.0
-0:0/animation_frame_1/duration = 1.0
-0:0/animation_frame_2/duration = 1.0
-0:0/animation_frame_3/duration = 1.0
-0:0/animation_frame_4/duration = 1.0
-0:0/animation_frame_5/duration = 1.0
-0:0/animation_frame_6/duration = 1.0
 0:0/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_qliup"]
-sources/0 = SubResource("TileSetAtlasSource_dluhy")
+[sub_resource type="TileSet" id="TileSet_odl40"]
+sources/0 = SubResource("TileSetAtlasSource_qliup")
 
 [node name="Node2D" type="Node2D"]
 scale = Vector2(2, 2)
@@ -77,14 +62,16 @@ scale = Vector2(2, 2)
 scale = Vector2(2, 2)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-position = Vector2(-102.5, 51)
+material = SubResource("ShaderMaterial_o37ym")
+position = Vector2(-96, 39)
 scale = Vector2(2, 2)
 tile_map_data = PackedByteArray("AAD7/wEAAAABAAEAAAD8/wEAAAABAAEAAAD9/wEAAAABAAEAAAD+/wEAAAABAAEAAAD//wEAAAABAAEAAAAAAAEAAAABAAEAAAABAAEAAAABAAEAAAACAAEAAAABAAEAAAADAAEAAAABAAEAAAAEAAEAAAABAAEAAAAFAAEAAAABAAEAAAAGAAEAAAABAAEAAAAHAAEAAAABAAEAAAD4/wAAAAABAAAAAAD5/wAAAAABAAAAAAD6/wAAAAABAAAAAAD7/wAAAAABAAAAAAD8/wAAAAABAAAAAAD9/wAAAAABAAAAAAD+/wAAAAABAAAAAAD//wAAAAABAAAAAAAAAAAAAAABAAAAAAABAAAAAAABAAAAAAACAAAAAAABAAAAAAADAAAAAAABAAAAAAAEAAAAAAABAAAAAAAFAAAAAAABAAAAAAAGAAAAAAABAAAAAAAHAAAAAAABAAAAAAD4/wEAAAABAAEAAAAIAAAAAAACAAAAAAD3/wEAAAAAAAEAAAD3/wAAAAAAAAAAAAAIAAEAAAAEAAEAAAARAAMAAAABAAIAAAAQAAMAAAABAAIAAAAPAAMAAAABAAIAAAAOAAMAAAABAAIAAAANAAMAAAABAAIAAAAMAAMAAAABAAIAAAALAAMAAAABAAIAAAAKAAMAAAABAAIAAAAJAAMAAAABAAIAAAAIAAMAAAABAAIAAAAHAAMAAAABAAIAAAAGAAMAAAABAAIAAAAFAAMAAAABAAIAAAAEAAMAAAABAAIAAAADAAMAAAABAAIAAAACAAMAAAABAAIAAAD4/wMAAAABAAIAAAD5/wMAAAABAAIAAAD6/wMAAAABAAIAAAD7/wMAAAABAAIAAAD8/wMAAAABAAIAAAD9/wMAAAABAAIAAAD+/wMAAAABAAIAAAD//wMAAAABAAIAAAAAAAMAAAABAAIAAAABAAMAAAABAAIAAAD5/wIAAAABAAEAAAD6/wIAAAABAAEAAAD7/wIAAAABAAEAAAD8/wIAAAABAAEAAAD9/wIAAAABAAEAAAD+/wIAAAABAAEAAAD//wIAAAABAAEAAAAAAAIAAAABAAEAAAABAAIAAAABAAEAAAACAAIAAAABAAEAAAADAAIAAAABAAEAAAD6/wEAAAABAAEAAAD5/wEAAAABAAEAAAD4/wIAAAABAAEAAAAEAAIAAAABAAEAAAAFAAIAAAABAAEAAAAGAAIAAAABAAEAAAAHAAIAAAABAAEAAAAIAAIAAAAEAAIAAAAKAAIAAAAFAAIAAAAMAAIAAAAFAAIAAAAOAAIAAAAFAAIAAAAQAAIAAAAFAAIAAAD3/wMAAAAAAAIAAAD3/wIAAAAAAAEAAAARAAIAAAAFAAIAAAAPAAIAAAAFAAIAAAAJAAIAAAAFAAIAAAALAAEAAAAFAAEAAAALAAIAAAAFAAIAAAANAAIAAAAFAAIAAAAMAAEAAAAFAAEAAAAKAAEAAAAFAAEAAAAJAAEAAAAFAAEAAAANAAEAAAAFAAEAAAAOAAEAAAAFAAEAAAAPAAEAAAAFAAEAAAAQAAEAAAAFAAEAAAARAAEAAAAFAAEAAAAJAAAAAAABAAQAAAAKAAAAAAABAAQAAAALAAAAAAABAAQAAAAMAAAAAAABAAQAAAANAAAAAAABAAQAAAAOAAAAAAABAAQAAAAPAAAAAAABAAQAAAAQAAAAAAABAAQAAAARAAAAAAABAAQAAAASAAIAAAACAAAAAAASAAMAAAACAAIAAAASAAEAAAAFAAEAAAASAAAAAAACAAQAAAA=")
 tile_set = SubResource("TileSet_oxx6f")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="TileMapLayer"]
+material = SubResource("ShaderMaterial_dluhy")
 tile_map_data = PackedByteArray("AAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAA=")
-tile_set = SubResource("TileSet_qliup")
+tile_set = SubResource("TileSet_odl40")
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_oxx6f")]
 position = Vector2(16, 38)
