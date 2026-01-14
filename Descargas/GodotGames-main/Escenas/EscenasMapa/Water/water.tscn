@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg38l62pfyafs"]
+
+[ext_resource type="Texture2D" uid="uid://cayjwh6bmeksv" path="res://Assets/Tilemap/waves-Sheet.png" id="1_e11ib"]
+[ext_resource type="Script" uid="uid://b3h7i5t8x343d" path="res://Escenas/EscenasMapa/Water/water.gd" id="1_sf4xi"]
+
+[node name="Water" type="Node2D"]
+script = ExtResource("1_sf4xi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_e11ib")
+
+[node name="Camera2D" type="Camera2D" parent="Sprite2D"]
+zoom = Vector2(3, 3)
