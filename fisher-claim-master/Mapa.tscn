@@ -57,6 +57,7 @@ tile_set = SubResource("TileSet_622qf")
 
 [node name="Player" parent="." instance=ExtResource("2_qgw4m")]
 position = Vector2(-33, -5)
+floor_stop_on_slope = true
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(-5, -22)

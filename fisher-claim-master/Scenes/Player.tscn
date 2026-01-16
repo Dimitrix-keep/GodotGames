@@ -229,7 +229,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_70hv0")
 }],
-"loop": true,
+"loop": false,
 "name": &"reel",
 "speed": 5.0
 }, {
@@ -296,7 +296,6 @@ animation = &"idle_fishing"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_52ee3"]
 animation = &"reel"
-advance_on_start = true
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bhhdu"]
 animation = &"run"
@@ -321,26 +320,28 @@ advance_condition = &"is_walking"
 advance_mode = 2
 advance_condition = &"is_running"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1iu4k"]
-advance_mode = 2
-advance_condition = &"is_idle"
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yoq75"]
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_52ee3"]
-break_loop_at_end = true
 advance_mode = 2
 advance_condition = &"is_fishing"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bhhdu"]
-switch_mode = 2
+reset = false
+switch_mode = 1
 advance_condition = &"is_idle_fishing"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gntrk"]
 break_loop_at_end = true
-advance_mode = 2
+reset = false
+switch_mode = 2
 advance_condition = &"is_reeling"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dewec"]
+break_loop_at_end = true
+switch_mode = 1
+advance_condition = &"is_idle_fishing"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_bhhdu"]
 states/End/position = Vector2(117, -149.10283)
@@ -352,12 +353,12 @@ states/idle/position = Vector2(260, -65.10283)
 states/idle_fishing/node = SubResource("AnimationNodeAnimation_nn08x")
 states/idle_fishing/position = Vector2(553, -149.10283)
 states/reel/node = SubResource("AnimationNodeAnimation_52ee3")
-states/reel/position = Vector2(553, -65.10283)
+states/reel/position = Vector2(553, -36.10283)
 states/run/node = SubResource("AnimationNodeAnimation_bhhdu")
 states/run/position = Vector2(465, 15.897171)
 states/walk/node = SubResource("AnimationNodeAnimation_megsn")
 states/walk/position = Vector2(260, 15.897171)
-transitions = ["idle", "walk", SubResource("AnimationNodeStateMachineTransition_ksbbd"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_glx4g"), "run", "walk", SubResource("AnimationNodeStateMachineTransition_miouo"), "walk", "run", SubResource("AnimationNodeStateMachineTransition_o3h8g"), "reel", "idle", SubResource("AnimationNodeStateMachineTransition_1iu4k"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_yoq75"), "idle", "fishing", SubResource("AnimationNodeStateMachineTransition_52ee3"), "fishing", "idle_fishing", SubResource("AnimationNodeStateMachineTransition_bhhdu"), "idle_fishing", "reel", SubResource("AnimationNodeStateMachineTransition_gntrk")]
+transitions = ["idle", "walk", SubResource("AnimationNodeStateMachineTransition_ksbbd"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_glx4g"), "run", "walk", SubResource("AnimationNodeStateMachineTransition_miouo"), "walk", "run", SubResource("AnimationNodeStateMachineTransition_o3h8g"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_yoq75"), "idle", "fishing", SubResource("AnimationNodeStateMachineTransition_52ee3"), "fishing", "idle_fishing", SubResource("AnimationNodeStateMachineTransition_bhhdu"), "idle_fishing", "reel", SubResource("AnimationNodeStateMachineTransition_gntrk"), "reel", "idle_fishing", SubResource("AnimationNodeStateMachineTransition_dewec")]
 graph_offset = Vector2(0, -184.10283)
 
 [sub_resource type="Animation" id="Animation_lslt6"]
@@ -576,9 +577,9 @@ position = Vector2(-4.499999, -2.2500007)
 scale = Vector2(0.74000007, 0.7734375)
 sprite_frames = SubResource("SpriteFrames_lslt6")
 animation = &""
+autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-5, -1)
 shape = SubResource("CapsuleShape2D_ulo2v")
 
@@ -597,5 +598,7 @@ parameters/conditions/is_walking = false
 libraries = {
 &"": SubResource("AnimationLibrary_qidb7")
 }
+movie_quit_on_finish = true
 
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimationTree" to="." method="_on_animation_tree_animation_finished"]
