@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://da67dne4t3v67"]
+[gd_scene load_steps=69 format=3 uid="uid://da67dne4t3v67"]
 
 [ext_resource type="Script" uid="uid://bhplvpof5tjar" path="res://Scripts/player.gd" id="1_kyqiw"]
 [ext_resource type="Texture2D" uid="uid://cwcast62udjr4" path="res://Animaciones/Pescador-Sheet.png" id="1_rpqav"]
@@ -16,10 +16,6 @@ region = Rect2(0, 64, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_hkrn1"]
 atlas = ExtResource("2_gntrk")
 region = Rect2(128, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8flut"]
-atlas = ExtResource("1_rpqav")
-region = Rect2(640, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u7x0b"]
 atlas = ExtResource("1_rpqav")
@@ -162,9 +158,6 @@ animations = [{
 "speed": 7.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8flut")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_u7x0b")
 }, {
@@ -339,11 +332,12 @@ advance_condition = &"is_idle"
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_52ee3"]
+break_loop_at_end = true
 advance_mode = 2
 advance_condition = &"is_fishing"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bhhdu"]
-advance_mode = 2
+break_loop_at_end = true
 advance_condition = &"is_idle_fishing"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_megsn"]
@@ -596,7 +590,7 @@ z_as_relative = false
 position = Vector2(-4.499999, -2.2500007)
 scale = Vector2(0.74000007, 0.7734375)
 sprite_frames = SubResource("SpriteFrames_lslt6")
-animation = &"idle"
+animation = &"fishing"
 autoplay = "idle"
 frame = 3
 

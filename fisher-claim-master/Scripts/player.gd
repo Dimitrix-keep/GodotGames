@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 const WALK_SPEED = 50.0
@@ -20,7 +21,7 @@ enum PlayerState {
 }
 
 var current_state: PlayerState = PlayerState.IDLE
-var LOCKED_STATES = [PlayerState.FISHING, PlayerState.IDLE_FISHING, PlayerState.CAST, PlayerState.REEL]
+var LOCKED_STATES = []
 
 # ------------------------
 # Mapear enums a nombres de animación en AnimationTree
@@ -51,9 +52,9 @@ func change_state(_new_state: PlayerState):
 		return
 	if can_change_state(_new_state):
 		current_state = _new_state
-		var name = anim_name(current_state)
-		state_machine.travel(name)
-		print("Estado actual:", name)
+		var _name = anim_name(current_state)
+		state_machine.travel(_name)
+		print("Estado actual:", _name)
 
 # ------------------------
 # Flip del sprite
@@ -79,6 +80,9 @@ func _physics_process(delta):
 		velocity.x = direction * WALK_SPEED
 		change_state(PlayerState.WALK)
 		flip_sprite(direction)
+
+	elif Input.is_action_pressed("fishing") and can_change_state(PlayerState.FISHING):
+		change_state(PlayerState.FISHING)
 	else:
 		velocity.x = 0
 		change_state(PlayerState.IDLE)
