@@ -7,6 +7,7 @@ var gravity = 600
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine = $AnimationTree["parameters/playback"]
 
+
 # ------------------------
 # Estados del Player
 # ------------------------
@@ -21,12 +22,12 @@ enum PlayerState {
 }
 
 var current_state: PlayerState = PlayerState.IDLE
-var LOCKED_STATES = []
+
 
 # ------------------------
 # Mapear enums a nombres de animación en AnimationTree
 # ------------------------
-func anim_name(state: PlayerState) -> String:
+func _anim_name(state: PlayerState) -> String:
 	match state:
 		PlayerState.IDLE: return "idle"
 		PlayerState.WALK: return "walk"
@@ -42,17 +43,15 @@ func anim_name(state: PlayerState) -> String:
 # ------------------------
 # Cambio de estado seguro
 # ------------------------
-func can_change_state(_new_state: PlayerState) -> bool:
-	if current_state in LOCKED_STATES:
-		return false
-	return true
+
+
 
 func change_state(_new_state: PlayerState):
 	if current_state == _new_state:
-		return
-	if can_change_state(_new_state):
+		return true
+	if _new_state:
 		current_state = _new_state
-		var _name = anim_name(current_state)
+		var _name = _anim_name(current_state)
 		state_machine.travel(_name)
 		print("Estado actual:", _name)
 
@@ -76,15 +75,22 @@ func _physics_process(delta):
 	# Dirección horizontal
 	var direction := Input.get_axis("left", "right")
 
-	if direction != 0 and can_change_state(PlayerState.WALK):
+	if direction != 0 :
 		velocity.x = direction * WALK_SPEED
 		change_state(PlayerState.WALK)
 		flip_sprite(direction)
-
-	elif Input.is_action_pressed("fishing") and can_change_state(PlayerState.FISHING):
+	elif Input.is_action_pressed("fishing"):
 		change_state(PlayerState.FISHING)
+		
+	elif Input.is_action_pressed("reel") : #and pez=null:
+		change_state(PlayerState.REEL)
 	else:
 		velocity.x = 0
 		change_state(PlayerState.IDLE)
-
 	move_and_slide()
+
+
+# Cambia "anim_name" por "_anim_name"
+func _on_animation_tree_animation_finished(anim_name: StringName):
+	print("Termino la animacion de ", state_machine.get_current_node())
+	# Ya no saldrá el aviso de "UNUSED_PARAMETER"

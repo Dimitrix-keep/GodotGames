@@ -1,9 +1,8 @@
-[gd_scene load_steps=69 format=3 uid="uid://da67dne4t3v67"]
+[gd_scene load_steps=64 format=3 uid="uid://da67dne4t3v67"]
 
 [ext_resource type="Script" uid="uid://bhplvpof5tjar" path="res://Scripts/player.gd" id="1_kyqiw"]
 [ext_resource type="Texture2D" uid="uid://cwcast62udjr4" path="res://Animaciones/Pescador-Sheet.png" id="1_rpqav"]
 [ext_resource type="Texture2D" uid="uid://8a7iwth4uwl0" path="res://Animaciones/idle_pescando-Sheet.png" id="2_gntrk"]
-[ext_resource type="Script" uid="uid://c2msi4g5p5kqr" path="res://Scripts/animation_tree.gd" id="4_dewec"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wosd6"]
 atlas = ExtResource("2_gntrk")
@@ -285,9 +284,6 @@ animations = [{
 radius = 4.0
 height = 22.0
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gntrk"]
-animation = &"cast"
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dewec"]
 animation = &"fishing"
 
@@ -300,6 +296,7 @@ animation = &"idle_fishing"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_52ee3"]
 animation = &"reel"
+advance_on_start = true
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bhhdu"]
 animation = &"run"
@@ -337,42 +334,30 @@ advance_mode = 2
 advance_condition = &"is_fishing"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bhhdu"]
-break_loop_at_end = true
+switch_mode = 2
 advance_condition = &"is_idle_fishing"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_megsn"]
-advance_mode = 2
-advance_condition = &"is_casting"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1e7my"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gntrk"]
+break_loop_at_end = true
 advance_mode = 2
 advance_condition = &"is_reeling"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_arntx"]
-advance_mode = 2
-advance_condition = &"is_casting"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gntrk"]
-advance_mode = 2
-
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_bhhdu"]
-states/End/position = Vector2(854, 15.897171)
+states/End/position = Vector2(117, -149.10283)
 states/Start/position = Vector2(109, -65.10283)
-states/cast/node = SubResource("AnimationNodeAnimation_gntrk")
-states/cast/position = Vector2(670, -149.10283)
 states/fishing/node = SubResource("AnimationNodeAnimation_dewec")
 states/fishing/position = Vector2(260, -149.10283)
 states/idle/node = SubResource("AnimationNodeAnimation_5ixxa")
 states/idle/position = Vector2(260, -65.10283)
 states/idle_fishing/node = SubResource("AnimationNodeAnimation_nn08x")
-states/idle_fishing/position = Vector2(471, -149.10283)
+states/idle_fishing/position = Vector2(553, -149.10283)
 states/reel/node = SubResource("AnimationNodeAnimation_52ee3")
-states/reel/position = Vector2(670, -62)
+states/reel/position = Vector2(553, -65.10283)
 states/run/node = SubResource("AnimationNodeAnimation_bhhdu")
 states/run/position = Vector2(465, 15.897171)
 states/walk/node = SubResource("AnimationNodeAnimation_megsn")
 states/walk/position = Vector2(260, 15.897171)
-transitions = ["idle", "walk", SubResource("AnimationNodeStateMachineTransition_ksbbd"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_glx4g"), "run", "walk", SubResource("AnimationNodeStateMachineTransition_miouo"), "walk", "run", SubResource("AnimationNodeStateMachineTransition_o3h8g"), "reel", "idle", SubResource("AnimationNodeStateMachineTransition_1iu4k"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_yoq75"), "idle", "fishing", SubResource("AnimationNodeStateMachineTransition_52ee3"), "fishing", "idle_fishing", SubResource("AnimationNodeStateMachineTransition_bhhdu"), "idle_fishing", "cast", SubResource("AnimationNodeStateMachineTransition_megsn"), "cast", "reel", SubResource("AnimationNodeStateMachineTransition_1e7my"), "reel", "cast", SubResource("AnimationNodeStateMachineTransition_arntx"), "run", "End", SubResource("AnimationNodeStateMachineTransition_gntrk")]
+transitions = ["idle", "walk", SubResource("AnimationNodeStateMachineTransition_ksbbd"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_glx4g"), "run", "walk", SubResource("AnimationNodeStateMachineTransition_miouo"), "walk", "run", SubResource("AnimationNodeStateMachineTransition_o3h8g"), "reel", "idle", SubResource("AnimationNodeStateMachineTransition_1iu4k"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_yoq75"), "idle", "fishing", SubResource("AnimationNodeStateMachineTransition_52ee3"), "fishing", "idle_fishing", SubResource("AnimationNodeStateMachineTransition_bhhdu"), "idle_fishing", "reel", SubResource("AnimationNodeStateMachineTransition_gntrk")]
 graph_offset = Vector2(0, -184.10283)
 
 [sub_resource type="Animation" id="Animation_lslt6"]
@@ -581,7 +566,7 @@ _data = {
 &"walk": SubResource("Animation_i2e8t")
 }
 
-[node name="Node2D" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D"]
 floor_stop_on_slope = false
 script = ExtResource("1_kyqiw")
 
@@ -590,9 +575,7 @@ z_as_relative = false
 position = Vector2(-4.499999, -2.2500007)
 scale = Vector2(0.74000007, 0.7734375)
 sprite_frames = SubResource("SpriteFrames_lslt6")
-animation = &"fishing"
-autoplay = "idle"
-frame = 3
+animation = &""
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -601,17 +584,18 @@ shape = SubResource("CapsuleShape2D_ulo2v")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_bhhdu")
+advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
-parameters/conditions/is_casting = false
 parameters/conditions/is_fishing = false
 parameters/conditions/is_idle = false
 parameters/conditions/is_idle_fishing = false
 parameters/conditions/is_reeling = false
 parameters/conditions/is_running = false
 parameters/conditions/is_walking = false
-script = ExtResource("4_dewec")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_qidb7")
 }
+
+[connection signal="animation_finished" from="AnimationTree" to="." method="_on_animation_tree_animation_finished"]
