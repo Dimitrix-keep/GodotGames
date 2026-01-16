@@ -1,50 +1,86 @@
 extends CharacterBody2D
 
-const SPEED = 50.0
-var RUN_SPEED_BONUS = 40 # El extra de velocidad
-var gravity = 600 # Nota: 60 suele ser muy poco para Godot 4, lo subí a 600
+const WALK_SPEED = 50.0
+var gravity = 600
+
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
-var on_fishing = false
-var on_running=false
+@onready var state_machine = $AnimationTree["parameters/playback"]
 
-func _physics_process(_delta):
-	# 1. Gravedad
+# ------------------------
+# Estados del Player
+# ------------------------
+enum PlayerState {
+	IDLE,
+	WALK,
+	RUN,
+	FISHING,
+	IDLE_FISHING,
+	CAST,
+	REEL,
+}
+
+var current_state: PlayerState = PlayerState.IDLE
+var LOCKED_STATES = [PlayerState.FISHING, PlayerState.IDLE_FISHING, PlayerState.CAST, PlayerState.REEL]
+
+# ------------------------
+# Mapear enums a nombres de animación en AnimationTree
+# ------------------------
+func anim_name(state: PlayerState) -> String:
+	match state:
+		PlayerState.IDLE: return "idle"
+		PlayerState.WALK: return "walk"
+		PlayerState.RUN: return "run"
+		PlayerState.FISHING: return "fishing"
+		PlayerState.IDLE_FISHING: return "idle_fishing"
+		PlayerState.CAST: return "cast"
+		PlayerState.REEL: return "reel"
+	# valor por defecto si algo falla
+	return "idle"
+
+
+# ------------------------
+# Cambio de estado seguro
+# ------------------------
+func can_change_state(_new_state: PlayerState) -> bool:
+	if current_state in LOCKED_STATES:
+		return false
+	return true
+
+func change_state(_new_state: PlayerState):
+	if current_state == _new_state:
+		return
+	if can_change_state(_new_state):
+		current_state = _new_state
+		var name = anim_name(current_state)
+		state_machine.travel(name)
+		print("Estado actual:", name)
+
+# ------------------------
+# Flip del sprite
+# ------------------------
+func flip_sprite(direction: float):
+	if direction > 0:
+		animation.flip_h = false
+	elif direction < 0:
+		animation.flip_h = true
+
+# ------------------------
+# Movimiento y física
+# ------------------------
+func _physics_process(delta):
+	# Gravedad
 	if not is_on_floor():
-		velocity.y += gravity * _delta
+		velocity.y += gravity * delta
 
-	# 2. Detectar Dirección y si está corriendo
-	var direction = Input.get_axis("left", "right")
-	var esta_corriendo = Input.is_action_pressed("run") and direction != 0
+	# Dirección horizontal
+	var direction := Input.get_axis("left", "right")
 
-	# 3. Calcular Velocidad
-	if direction != 0:
-		var velocidad_final = SPEED
-		if esta_corriendo:
-			velocidad_final += RUN_SPEED_BONUS
-		velocity.x = direction * velocidad_final
+	if direction != 0 and can_change_state(PlayerState.WALK):
+		velocity.x = direction * WALK_SPEED
+		change_state(PlayerState.WALK)
+		flip_sprite(direction)
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-	
-	animacion(direction)
+		velocity.x = 0
+		change_state(PlayerState.IDLE)
+
 	move_and_slide()
-	
-func animacion(direction):
-	if direction != 0:
-		animation.play("running") # Asegúrate de tener esta animación
-	else:
-		animation.play("walking")
-		animation.flip_h = (direction < 0)
-		
-
-func pescar():
-	if on_fishing :
-		if Input.is_action_pressed("fishing"):
-			animation.play("idle_fishing")
-			on_fishing=false
-	else:
-		animation.play("idle")
-	
-	
-
-
-		
